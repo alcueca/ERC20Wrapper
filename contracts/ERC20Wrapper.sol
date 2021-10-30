@@ -27,9 +27,9 @@ contract ERC20Wrapper is ERC20Permit {
         wrapperOut = _wrapMath(underlyingUsed);
 
         _mint(to, wrapperOut);
-        cache += underlyingIn;
+        cache += underlyingUsed;
 
-        require(underlying.transferFrom(msg.sender, address(this), underlyingIn), "Transfer fail");
+        require(underlyingIn == 0 || underlying.transferFrom(msg.sender, address(this), underlyingIn), "Transfer fail");
         
         emit Wrapped(msg.sender, to, underlyingUsed, wrapperOut);
     }
